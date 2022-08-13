@@ -21,32 +21,24 @@
               
         <br>
         <br>
-        <form action="{% url 'trans' %}" method="POST" role="form" enctype="multipart/form-data">
-          {% csrf_token %}
 
-          <div class="form-group">
 
-          <div class="dropdown" style="position: absolute; top: 0; right: 0; width: 100px; text-align:right;">
-            <select name="dropdown">
-              <option selected="selected" disabled>Select Language</option>
-              <option value="Hindi">Hindi</option>
-              <option value="Tamil">Tamil</option>
-              <option value="Kannada">Kannada</option>
-              <option value="Telugu">Telugu</option>
-          </select>
+          <form action="{% url 'trans' %}" method='POST' enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.as_p}}
+              <input type="submit" value="Submit">
 
-          </div>
-
-          
-            
-              <span class="input-group-btn">
-                <button type="submit" class="btn btn-default" id="add-btn">Upload Cases</button>
-              </span>
-        
-         
-          </div>
-        </form>
-
+              <div class="dropdown" style="position: absolute; top: 0; right: 0; width: 100px; text-align:right;">
+                <select name="dropdown">
+                  <option selected="selected" disabled>Select Language</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Tamil">Tamil</option>
+                  <option value="Kannada">Kannada</option>
+                  <option value="Telugu">Telugu</option>
+              </select>
+    
+              </div>
+          </form>
 
           </div>
           <div class="row-md-8 col-md-12" id="hidden">
