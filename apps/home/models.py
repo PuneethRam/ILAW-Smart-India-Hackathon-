@@ -4,8 +4,12 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from unittest.util import _MAX_LENGTH
+from xml.parsers.expat import model
 from django.db import models
 from django.contrib.auth.models import User
+
+import uuid
+import pathlib
 
 # Create your models here.
 
@@ -35,12 +39,18 @@ class Sec(models.Model):
     def __str__(self):
         return self.sec_def
 
+
+def upload_handler(instance, filename):
+    fpath = pathlib.Path(filename)
+    new_name = str(uuid.uuid1())
+    return  f"media/{new_name}{fpath.suffix}"
+
+
+
 class UploadCaseFile(models.Model):
-    uploadfile = models.FileField(upload_to='media',null=True,blank=True)
-    file_descripion=models.TextField(default='sample')
-
-    def __str__(self):
-        return self.file_descripion
-
-        
+    uploadfile_name = models.CharField(default=None, max_length=50)
+    uploadfile_description = models.TextField(default="", blank=True,null=True)
+    uploadfile = models.FileField(upload_to='new_cases/',null=True,blank=True)
+    prediction = models.CharField(default="None",blank=True,null=True,max_length=50)
+    # uploadfile_description = models.TextField(default=None)
 

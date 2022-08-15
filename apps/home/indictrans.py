@@ -9,13 +9,8 @@ Original file is located at
 
 # Commented out IPython magic to ensure Python compatibility.
 # clone the repo for running evaluation
-!git clone https://github.com/AI4Bharat/indicTrans.git
 # %cd indicTrans
 # clone requirements repositories
-!git clone https://github.com/anoopkunchukuttan/indic_nlp_library.git
-!git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
-!git clone https://github.com/rsennrich/subword-nmt.git
-# %cd ..
 
 """# New section"""
 
@@ -37,23 +32,6 @@ os.environ['PYTHONPATH'] += ":/content/fairseq/"
 # sanity check to see if fairseq is installed
 from fairseq import checkpoint_utils, distributed_utils, options, tasks, utils
 
-# Commented out IPython magic to ensure Python compatibility.
-# download the indictrans model
-
-
-# downloading the indic-en model
-# !wget https://storage.googleapis.com/samanantar-public/V0.3/models/indic-en.zip
-# !unzip indic-en.zip
-
-# downloading the en-indic model
-!wget https://storage.googleapis.com/samanantar-public/V0.3/models/en-indic.zip
-!unzip en-indic.zip
-
-# # downloading the indic-indic model
-# !wget https://storage.googleapis.com/samanantar-public/V0.3/models/m2m.zip
-# !unzip m2m.zip
-
-# %cd indicTrans
 
 from indicTrans.inference.engine import Model
 

@@ -15,6 +15,10 @@ class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadCaseFile
         fields = [
-        'uploadfile'
+        'uploadfile_name',
+        'uploadfile',
+       
         ]
-    
+
+# class UploadFileForm(forms.Form):
+#     file = forms.FileField()

@@ -31,8 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.home'  # Enable the inner home (home)
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
-MEDIA_URL = 'media_root/'
 
 
 MIDDLEWARE = [
@@ -123,6 +121,11 @@ STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+
+MODEL_URL = '/models/'
+MODEL_ROOT = os.path.join(BASE_DIR, 'models').replace('\\', '/')
 
 #############################################################
 #############################################################

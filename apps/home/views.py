@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from multiprocessing import context
+from xxlimited import new
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -13,54 +14,107 @@ from .forms import TodoForm,UploadFileForm
 import os
 from .get_sec_def import getDef
 from .getTranslate import getTranslate
+from .jpbigru import *
+
+
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+
 
 
 IMAGE_FILE_TYPES = ['txt']
-@require_POST
-@login_required(login_url="/login/")
 
+pred_dict = {0 : 'Rejected'}
+pred_dict = {0 : 'Accepted'}
 
+def case_analysis(request):
+
+    form = UploadFileForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+
+        file_content = request.FILES['uploadfile'].read()
+        print(file_content)
+        file_content = file_content.decode('UTF-8')
+        pred_dict = judgement_pred_bigru(file_content)
+        
+        print(pred_dict)
+
+        obj = form.save(commit=False)
+        obj.save()
+
+        obj.prediction = pred_dict
+
+        with open(settings.MEDIA_ROOT + '/new_cases/' + obj.uploadfile.url.split('/')[-1], 'r') as f:
+            for line in f.readlines():
+                obj.uploadfile_description += line.strip()
+
+        obj.save()
+
+    files = UploadCaseFile.objects.all()
+    for f in files:
+        f.uploadfile_description = f.uploadfile_description[0:70] + '...'
+
+    context = {'form' : form, 'files': files}
+    html_template = loader.get_template('home/case_analysis.html')
+    return HttpResponse(html_template.render(context, request))
 
 def translate(request):
-    form=UploadFileForm()
+    
+    form = UploadFileForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
-        print("request post")
-        form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            print("form valid")
-            # user_pr = form.save(commit=False)
-            # user_pr.uploadfile = request.FILES['uploadfile']
-            # print(user_pr.uploadfile.path)
-            # for file in os.listdir('C:\Users\sumit\OneDrive\Desktop\black-dashboard-django\core\media_root\media'):
-            #     if user_pr.uploadfile.name.split('.')[0] in file:
-            #         case_content=''
-            #         with open(user_pr.uploadfile.path,'r') as f:
-            #             for line in f.readlines():
-            #                 case_content += line.strip()
-            
+            file_content = request.FILES['uploadfile'].read()
+            file_content = file_content.decode('UTF-8')  
 
-            file_type = user_pr.uploadfile.name.split('.')[-1]
-            file_type = file_type.lower()
-            if file_type not in IMAGE_FILE_TYPES:
-                html_template = loader.get_template('home/translator.html')
-                context={}
-                return HttpResponse(html_template.render(context, request))
-            user_pr.save()
+            language = request.POST.get("dropdown", "")
+            print("Language:", language)
+            translated = file_content
 
+            context = {'language': language,'before_trans': file_content, 'translated': translated, 'form': form}
+        
+        html_template = loader.get_template('home/translate.html')
+        return HttpResponse(html_template.render(context, request))
 
-    #with open(newfile.uploadfile.path,'r') as f:
-    #    for line in f.readlines():
-    #        case_content += line.strip()
-
-
-    language=request.POST.get("dropdown", "")
-    print(language)
-    output=getTranslate(language,case_content)
-
-    context={'output':output,'language':language,'form':form}
-
-    html_template = loader.get_template('home/translator.html')
+    context = {'form':form}
+    html_template = loader.get_template('home/translate.html')
     return HttpResponse(html_template.render(context, request))
+
+
+def predict_judgement(request):    
+    form = UploadFileForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            file_content = request.FILES['uploadfile'].read()
+            file_content = file_content.decode('UTF-8')
+            prediction = judgement_pred_bigru(file_content)
+
+            context = {'prediction': prediction , 'form': form}
+        
+        html_template = loader.get_template('home/translate.html')
+        return HttpResponse(html_template.render(context, request))
+
+    context = {'form':form}
+    html_template = loader.get_template('home/translate.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+
+    # #with open(newfile.uploadfile.path,'r') as f:
+    # #    for line in f.readlines():
+    # #        case_content += line.strip()
+    # form=UploadFileForm()
+
+    # case_content = ''
+
+    # language=request.POST.get("dropdown", "")
+    # print(language)
+    # output=getTranslate(language,case_content)
+
+    # context={'output':output,'language':language,'form':form}
+
+    # html_template = loader.get_template('home/translator.html')
+    # return HttpResponse(html_template.render(context, request))
 
 
 
@@ -123,33 +177,6 @@ def index(request):
 
 
     html_template = loader.get_template('home/index.html')
-    return HttpResponse(html_template.render(context, request))
-
-def index(request):
-    todo_list = Todo.objects.order_by('id')
-    context = {'todo_list' : todo_list}
-    return render(request, 'home/index.html', context)
-
-def index(request):
-    todo_list = Todo.objects.order_by('id')
-
-    form = TodoForm()
-
-    context = {'todo_list' : todo_list, 'form' : form}
-
-    return render(request, 'home/index.html', context)
-
-@require_POST
-@login_required(login_url="/login/")
-def addTodo(request):
-    form = TodoForm(request.POST)
-
-    if form.is_valid():
-        new_todo = Todo(text=request.POST['text'])
-        new_todo.save()
-    context = {}
-    html_template = loader.get_template('home/index.html')
-
     return HttpResponse(html_template.render(context, request))
 
 
