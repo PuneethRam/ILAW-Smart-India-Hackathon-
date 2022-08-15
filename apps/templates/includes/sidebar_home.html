@@ -29,13 +29,13 @@
               </a>
             </li>
             <li class="{% if 'maps' in segment %} active {% endif %}">
-              <a href="/case_analysis.html">
+              <a href="{% url 'analysis' %}">
                 <i class="tim-icons icon-chart-bar-32"></i>
                 <p>Case Analysis</p>
               </a>
             </li>
             <li class="{% if 'notifications' in segment %} active {% endif %}">
-              <a href="/translator.html">
+              <a href="{% url 'trans' %}">
                 <i class="tim-icons icon-paper"></i>
                 <p>Translation</p>
               </a>
