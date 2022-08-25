@@ -26,6 +26,20 @@ def get_translated(input, language):
         lang = 'ka'
     elif language == 'Telugu':
         lang = 'tu'
+    elif language == 'Assamese':
+        lang = 'as'
+    elif language == 'Marathi':
+        lang = 'mr'
+    elif language == 'Bengali':
+        lang = 'bn'
+    elif language == 'Odia':
+        lang = 'or'
+    elif language == 'Gujarati':
+        lang = 'gu'
+    elif language == 'Malayalam':
+        lang = 'ml'
+    elif language == 'Punjabi':
+        lang = 'pa'
     all_output = ""
     if len(input):
         response = requests.post("http://216.48.181.177:5050/translate_sentence",

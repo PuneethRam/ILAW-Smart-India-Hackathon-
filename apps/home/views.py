@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 from multiprocessing import context
-# from xxlimited import new
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -16,11 +15,10 @@ from json import dumps
 from natsort import natsorted
 
 from .get_sec_def import getDef
-from .getTranslate import getTranslate
 from .jpbigru import *
 from .similar_cases import *
 from .relevant_statues import *
-# from .timeline_prediction import *
+from .timeline_prediction import *
 from .indictrans import *
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -36,46 +34,24 @@ def case_analysis(request):
 
     form = UploadFileForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-
         file_content = request.FILES['uploadfile'].read()
-        print(file_content)
         file_content = file_content.decode('UTF-8')
         obj = form.save(commit=False)
-        print("Object ID:",obj.id)
-
-        with open(settings.MEDIA_ROOT + '/new_cases/' + obj.uploadfile.url.split('/')[-1], 'r') as f:
-            for line in f.readlines():
-                obj.uploadfile_description += line.strip()
-
         obj.save()
-
-        # # 1. Judgement Prediction
-        # pred_dict = judgement_pred_bigru(file_content)
+        print("Object ID:",obj.id)
+        print(obj.uploadfile.url)
+        with open(settings.MEDIA_ROOT + '/new_cases/' + obj.uploadfile.url.split('/')[-1], 'r') as file:
+            for line in file.readlines():
+                obj.uploadfile_description += line.strip()
+        # print(obj.uploadfile_description)
+        obj.save()
         
-        # obj.prediction = pred_dict
-        # obj.save()
-
-
-        # judgement_pred = int(pred_dict)
-
-        # # 2. Similar Cases Retrieval
-        # # similarcases, sim_cases, case_probs = [],[],[]
-        # similarcases, sim_cases, case_probs = similarcase(file_content)
-
-        # # 3. Law Suggestion
-        # # sim_prob_statues, sim_statues, statue_probs = [],[],[]
-        # sim_prob_statues, sim_statues, statue_probs = similarstat(file_content)
-
-        # # 4. Timeline Prediction
-        # timeline = get_timeline_pred(file_content)
-
-        # 5. Translation
-
 
 
         files = UploadCaseFile.objects.all()
         for f in files:
             f.uploadfile_description = f.uploadfile_description[0:100] + '...'
+        
         files = files[::-1]
 
         context = {'form' : form,
@@ -102,6 +78,18 @@ def case_analysis(request):
     html_template = loader.get_template('home/case_analysis.html')
     return HttpResponse(html_template.render(context, request))
 
+def get_virtual_courtroom(request, id=None):
+    context = {} 
+    html_template = loader.get_template('home/virtual_courtroom.html')
+    return HttpResponse(html_template.render(context, request))
+
+def get_hearing_home(request, id=None):
+    context = {} 
+    html_template = loader.get_template('home/hearing_home.html')
+    return HttpResponse(html_template.render(context, request))
+  
+
+
 
 use_model = True
 @require_POST
@@ -109,7 +97,7 @@ use_model = True
 def get_query_analysis(request, id=None):
     case = UploadCaseFile.objects.get(id=id)
     input = case.uploadfile_description
-    
+    print(">>>>>>>>>>>>",case,input)
     pred_dict = judgement_pred_bigru(input)
     judgement_pred = int(pred_dict)
     # 2. Similar Cases Retrieval
@@ -122,13 +110,13 @@ def get_query_analysis(request, id=None):
 
     # 4. Timeline Prediction
     print(input)
-    # timeline =  get_timeline_pred(input)
-    # print(timeline)
+    timeline =  get_timeline_pred(input)
+    print(timeline)
 
 
     context = {'prediction' : judgement_pred,
                 'case':case,
-                    # 'timeline' : timeline,
+                    'timeline' : timeline,
                     'similarcases': dumps(similarcases),
                     'sim_cases':dumps(sim_cases),
                     'case_probs': dumps(case_probs),
@@ -186,8 +174,10 @@ use_model = True
 def get_similar_cases(request, id=None):
 
     query = UploadCaseFile.objects.get(id=id)
-    _, similar_cases, case_probs = similarcase(query.uploadfile_description)
-    print(similar_cases)
+    
+    all_similarcases, similar_cases, case_probs = similarcase(query.uploadfile_description)
+    print(">>>>>>>",id, query, query.uploadfile_description)
+    print(all_similarcases)
 
     similar_case_content = []
     for sim_case in similar_cases:
@@ -379,32 +369,6 @@ def pages(request):
 
         if load_template == 'admin':
             return HttpResponseRedirect(reverse('admin:index'))
-
-        elif load_template == 'high_court':
-            return HttpResponseRedirect(reverse('high_court:high_court'))
-
-        elif load_template == 'page4':
-            return HttpResponseRedirect(reverse('page4:page4'))
-
-        elif load_template == 'sec_def':
-            return HttpResponseRedirect(reverse('sec_def:sec_def'))
-
-        elif load_template == 'map':
-            return HttpResponseRedirect(reverse('map:map'))
-
-        elif load_template == 'page5':
-            return HttpResponseRedirect(reverse('page5:page5'))
-
-        elif load_template == 'pending':
-            return HttpResponseRedirect(reverse('pending:pending'))
-
-        elif load_template == 'contact':
-            return HttpResponseRedirect(reverse('contact:contact'))
-
-        elif load_template == 'Period_of_limitation':
-            return HttpResponseRedirect(reverse('Period_of_limitation:Period_of_limitation'))
-
-
         context['segment'] = load_template
 
         html_template = loader.get_template('home/' + load_template)

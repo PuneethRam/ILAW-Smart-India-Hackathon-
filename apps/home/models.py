@@ -61,6 +61,13 @@ def upload_handler(instance, filename):
     return  f"media/{new_name}{fpath.suffix}"
 
 
+choices =  [
+    ('Criminal Matters',"Criminal Matters"),
+    ('Land Acquisition', 'Land Acquisition'),
+    ('Labour Matters', 'Labour Matters'),
+    ('Family courts',"Family courts"),
+    ('Petty Cases',"Petty Cases")
+]
 
 class UploadCaseFile(models.Model):
     uploadfile_name = models.CharField(default=None, max_length=50)
@@ -68,6 +75,8 @@ class UploadCaseFile(models.Model):
     uploadfile_description = models.TextField(default="", blank=True,null=True)
     uploadfile = models.FileField(upload_to='new_cases/',null=True,blank=True)
     prediction = models.CharField(default="None",blank=True,null=True,max_length=50)
+    category =  models.CharField(max_length=24, choices=choices, default='None')
+
 
     def __str__(self):
         return self.uploadfile_name

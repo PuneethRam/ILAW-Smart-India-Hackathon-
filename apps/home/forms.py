@@ -19,6 +19,7 @@ class UploadFileForm(forms.ModelForm):
         'uploadfile_name',
         'uploadfile_short_desc',
         'uploadfile',
+        'category'
        
         ]
         widgets = {

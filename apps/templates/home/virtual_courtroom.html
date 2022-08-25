@@ -1,0 +1,225 @@
+{% extends "layouts/base2.html" %}
+
+
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+<style>
+
+th {
+  text-align: center;
+}
+
+td{
+text-align: center;
+}
+
+td.left{
+text-align: left;
+width: 1px;
+white-space: nowrap;
+}
+
+td.fitwidth {
+    width: 1px;
+    white-space: nowrap;
+}
+
+</style>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<body>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+<div class="col-12">
+  <div class="card card-chart">
+    <div class="card-header">
+      <h2> Court Hearings </h2>
+      <table class="table align-middle mb-0" style="table-layout: auto;">
+        <thead class="bg-dark">
+          <tr>
+            <th>Date of Petition</th>
+            <th>Hearing Number</th>
+            <th>Court Name</th>
+            <th>Judge Details</th>
+            <th>Opponent Status</th>
+            <th>Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1"> 19th August 2022</p>
+              </td>
+              <td class="fitwidth">
+    
+                <p class="fw-bold mb-1">Hearing 1 </p>
+                </td>
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1"> Supreme Court </p>
+                </td>
+
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1">Judge 1 </p>
+                    </td>
+                
+                <td class="left">
+                    <p class="badge  badge-warning rounded-pill d-inline"> Accepted </p>
+                </td>
+             
+                
+                <td class="left">
+                    <button type="submit" class="btn btn-default" id="add-btn">Resend Notifications</button>
+                    </td>
+                
+              </tr>
+          <tr>
+            <td class="fitwidth">
+
+                <p class="fw-bold mb-1"> 25th August 2022</p>
+          </td>
+          <td class="fitwidth">
+
+            <p class="fw-bold mb-1"> Hearing 2 </p>
+      </td>
+      <td class="fitwidth">
+    
+        <p class="fw-bold mb-1"> Supreme Court </p>
+    </td>
+
+      <td class="fitwidth">
+    
+        <p class="fw-bold mb-1">Judge 1 </p>
+        </td>
+            
+            <td class="left">
+                <p class="badge  badge-primary rounded-pill d-inline"> No Actions </p>
+            </td>
+         
+         
+            <td class="left">
+                <button type="submit" class="btn btn-default" id="add-btn">Resend Notifications</button>
+            </td>
+            
+          </tr>
+
+          <tr>
+            <td class="fitwidth">
+
+                <p class="fw-bold mb-1"> 23rd August 2022</p>
+          </td>
+            <td class="fitwidth">
+
+                  <p class="fw-bold mb-1"> Hearing 3 </p>
+            </td>
+            <td class="fitwidth">
+    
+                <p class="fw-bold mb-1"> Supreme Court </p>
+            </td>
+
+
+            <td class="fitwidth">
+
+                <p class="fw-bold mb-1"> Judge 1 </p>
+          </td>
+           
+            <td class="left">
+                <p class="badge  badge-primary rounded-pill d-inline"> No Actions </p>
+            </td>
+         
+         
+            <td class="left">
+                <button type="submit" class="btn btn-default" id="add-btn">Resend Notifications</button>
+            </td>
+            
+          </tr>
+
+        </tbody>
+      </table>
+
+      <br> <br>
+
+      <h2> Court Trials </h2>
+
+      <table class="table align-middle mb-0" style="table-layout: auto;">
+        <thead class="bg-dark">
+          <tr>
+            <th>Date of Trial</th>
+            <th>Trial Number</th>
+            <th>Court Name</th>
+            <th>Judge Details</th>
+            <th>Current Trial Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1"> 19th August 2022</p>
+              </td>
+              <td class="fitwidth">
+    
+                <p class="fw-bold mb-1"> Trial 1 </p>
+                </td>
+
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1"> Supreme Court </p>
+                </td>
+
+                <td class="fitwidth">
+    
+                    <p class="fw-bold mb-1"> Judge 1 </p>
+                </td>
+
+                <td class="fitwidth">
+    
+                    <p class="badge badge-success rounded-pill d-inline"> Passed </p>
+                </td>
+
+             
+                <td class="left">
+                    <button type="submit" class="btn btn-default" id="add-btn">View Judgement</button>
+                    </td>
+                
+              </tr>
+          
+          
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+            </div>
+          
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+{% endblock content %}

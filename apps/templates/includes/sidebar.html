@@ -20,17 +20,17 @@
           <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="{% url 'analysis' %}">
               <i class="tim-icons icon-chart-bar-32"></i>
-              <p>AI NLP Case Analysis</p>
+              <p>Virtual Courtroom</p>
             </a>
           </li>
 
           <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="{% url 'similar_case_retrieval' %}">
               <i class="tim-icons icon-chart-bar-32"></i>
-              <p>Similar Case Retrieval</p>
+              <p>Lawyer Dashboard</p>
             </a>
           </li>
-          <li class="{% if 'maps' in segment %} active {% endif %}">
+          {% comment %} <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="{% url 'relevant_statue_retrieval' %}">
               <i class="tim-icons icon-chart-bar-32"></i>
               <p>Relevant Statute Retrieval</p>
@@ -43,7 +43,7 @@
               <i class="tim-icons icon-single-copy-04"></i>
               <p>All Cases</p>
             </a>
-          </li>
+          </li> {% endcomment %}
 
           {% else %}
           <li class="active">

@@ -69,9 +69,9 @@ td.fitwidth {
             </td>
             
             <td >
-              <form action="{% url 'similar' id=f.id %}" method='POST' enctype="multipart/form-data">
+              <form action="{% url 'all_analysis' id=f.id %}" method='POST' enctype="multipart/form-data">
                 {% csrf_token %}
-              <button type="submit" class="btn btn-default" id="add-btn">Get Similar Cases</button>
+              <button type="submit" class="btn btn-default" id="add-btn">Perform AI Analysis</button>
             </form>
               </td>           
 

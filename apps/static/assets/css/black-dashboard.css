@@ -1389,7 +1389,7 @@ pre {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.42857;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   background-color: transparent;
   background-clip: padding-box;
   border: 1px solid #cad1d7;
@@ -1403,13 +1403,13 @@ pre {
     background-color: transparent;
     border: 0; }
   .form-control:focus {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.8);
     background-color: #ffffff;
     border-color: rgba(50, 151, 211, 0.25);
     outline: 0;
     box-shadow: none, none; }
   .form-control::placeholder {
-    color: #adb5bd;
+    color: #000000;
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
     background-color: #e9ecef;
@@ -13056,7 +13056,7 @@ Copyright (c) 2015 Daniel Eden
   position: relative;
   width: 100%;
   margin-bottom: 30px;
-  box-shadow: 0 1px 20px 0px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 1px 20px 0px #6e28c9; }
   .card label {
     color: rgba(255, 255, 255, 0.6); }
   .card .card-title {
