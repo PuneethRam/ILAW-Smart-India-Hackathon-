@@ -16,30 +16,35 @@
               <p>Home</p>
             </a>
           </li>
-          <li class="{% if 'icons' in segment %} active {% endif %}">
-            <a href="/similar_cases.html">
-              <i class="tim-icons icon-sound-wave"></i>
-              <p>Recommendations</p>
-            </a>
-          </li>
+
           <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="{% url 'analysis' %}">
               <i class="tim-icons icon-chart-bar-32"></i>
-              <p>Case Analysis</p>
+              <p>AI NLP Case Analysis</p>
             </a>
           </li>
+
+          <li class="{% if 'maps' in segment %} active {% endif %}">
+            <a href="{% url 'similar_case_retrieval' %}">
+              <i class="tim-icons icon-chart-bar-32"></i>
+              <p>Similar Case Retrieval</p>
+            </a>
+          </li>
+          <li class="{% if 'maps' in segment %} active {% endif %}">
+            <a href="{% url 'relevant_statue_retrieval' %}">
+              <i class="tim-icons icon-chart-bar-32"></i>
+              <p>Relevant Statute Retrieval</p>
+            </a>
+          </li>
+ 
+
           <li class="{% if 'notifications' in segment %} active {% endif %}">
-            <a href="/law.html">
+            <a href="{% url 'all_cases' %}">
               <i class="tim-icons icon-single-copy-04"></i>
-              <p>Law suggestion</p>
+              <p>All Cases</p>
             </a>
           </li>
-          <li class="{% if 'page-user' in segment %} active {% endif %}">
-            <a href="/timeline.html">
-              <i class="tim-icons icon-time-alarm"></i>
-              <p>Timeline</p>
-            </a>
-          </li>
+
           {% else %}
           <li class="active">
             <a target="_blank" 

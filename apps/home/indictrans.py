@@ -12,6 +12,36 @@ Original file is located at
 # %cd indicTrans
 # clone requirements repositories
 
+
+
+import requests
+import json
+
+def get_translated(input, language):
+    if language == 'Hindi':
+        lang = 'hi'
+    elif language == 'Tamil':
+        lang = 'ta'
+    elif language == 'Kannada':
+        lang = 'ka'
+    elif language == 'Telugu':
+        lang = 'tu'
+    all_output = ""
+    if len(input):
+        response = requests.post("http://216.48.181.177:5050/translate_sentence",
+            json={
+            "text": input ,
+            "source_language": "en",
+            "target_language":lang
+            },
+        )
+        output = json.loads(response.text)['text']
+        all_output += output + '.'
+    
+    return all_output
+
+
+
 """# New section"""
 
 # Commented out IPython magic to ensure Python compatibility.
@@ -26,25 +56,25 @@ Original file is located at
 #! pip install xformers
 # %cd ..
 
-# add fairseq folder to python path
-import os
-os.environ['PYTHONPATH'] += ":/content/fairseq/"
-# sanity check to see if fairseq is installed
-from fairseq import checkpoint_utils, distributed_utils, options, tasks, utils
+# # add fairseq folder to python path
+# import os
+# os.environ['PYTHONPATH'] += ":/content/fairseq/"
+# # sanity check to see if fairseq is installed
+# from fairseq import checkpoint_utils, distributed_utils, options, tasks, utils
 
 
-from indicTrans.inference.engine import Model
+# from indicTrans.inference.engine import Model
 
-en2indic_model = Model(expdir='../en-indic')
+# en2indic_model = Model(expdir='../en-indic')
 
-ta_sents = ['He seems to know us.',
-            "We will follow you or continue to follow you",
-            'If you develop these symptoms in someone close to you, staying at home can help prevent the spread of Corona virus infection.']
+# ta_sents = ['He seems to know us.',
+#             "We will follow you or continue to follow you",
+#             'If you develop these symptoms in someone close to you, staying at home can help prevent the spread of Corona virus infection.']
 
 
-en2indic_model.batch_translate(ta_sents, 'en', 'ta')
+# en2indic_model.batch_translate(ta_sents, 'en', 'ta')
 
-hi_paragraph = """The pandemic has caused global social and economic disruption. This has led to the worlds largest recession since the Great Depression. This led to the postponement or cancellation of sporting, religious, political and cultural events. Due to this fear, there was a shortage of supply as most of the people purchased the items like masks, sanitizers etc."""
+# hi_paragraph = """The pandemic has caused global social and economic disruption. This has led to the worlds largest recession since the Great Depression. This led to the postponement or cancellation of sporting, religious, political and cultural events. Due to this fear, there was a shortage of supply as most of the people purchased the items like masks, sanitizers etc."""
 
-en2indic_model.translate_paragraph(hi_paragraph, 'en', 'hi')
+# en2indic_model.translate_paragraph(hi_paragraph, 'en', 'hi')
 

@@ -8,7 +8,7 @@
 <div class="col-6">
     <div class="center">
       <p style="text-align:center;">
-        <img src="/static/assets/img/sd.jpeg">
+        <img src="https://blog.ipleaders.in/wp-content/uploads/2021/01/Criminal-Law.jpg">
       </p>
     </div>
         </img>
@@ -24,13 +24,20 @@
       <form action="{% url 'sec' %}" method="POST" role="form">    
         {% csrf_token %}    
         <label for="SecNo"> 
-            <h4> &nbsp; &nbsp; Please enter the Section Number that has to be defined: </h4>
+            {% comment %} <h4> &nbsp; &nbsp; Please enter the Section Number that has to be defined: </h4> {% endcomment %}
+         
         </label>
          <br>
-            &nbsp; &nbsp; &nbsp;  <input type="number" id="SecNo" name="SecNo" minlength="1" maxlength="4" required>
+            {% comment %} &nbsp; &nbsp; &nbsp;  <input type="number" id="SecNo" name="SecNo" minlength="1" maxlength="4" required> {% endcomment %}
+            <div class="col-6">
+              <input type="text" class="form-control" id="SecNo" name="SecNo" placeholder="Enter the Section Number">
+            </div>
+
+            <br>
          <br>
-         <br>
-            &nbsp; &nbsp; &nbsp;  <button onclick="show()" id="btnID" type="submit">Submit</button>  
+         <div class="col">
+          <div class="col-md-6"> <input class="btn btn-primary" type="submit" value="Submit"> </div>
+          </div>
          <br>
          <br>
          
@@ -38,6 +45,8 @@
      
     </div>
 </div>
+
+
 
 <div class="row-md-8 col-md-12" id="hidden">
     <div class="card card-chart">

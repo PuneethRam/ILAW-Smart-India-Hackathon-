@@ -12,8 +12,8 @@ admin.site.register(Case)
 from .models import Todo
 admin.site.register(Todo)
 
-from .models import Sec
-admin.site.register(Sec)
+from .models import Statutes
+admin.site.register(Statutes)
 
 from .models import UploadCaseFile
 admin.site.register(UploadCaseFile)

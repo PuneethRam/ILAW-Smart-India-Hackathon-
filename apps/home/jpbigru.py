@@ -10,9 +10,9 @@ from collections import Counter
 from matplotlib import rc
 
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
-from nltk.corpus import stopwords
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+# from nltk.corpus import stopwords
 
 import re
 from nltk.stem import WordNetLemmatizer

@@ -31,95 +31,159 @@ td.fitwidth {
 {% endblock stylesheets %}
 
 {% block content %}
-<div class="row">
+
 <body>
+  <div class="row">
   <div class="col-lg-12 col-md-12">
     <div class="col-12">
       <div class="card card-chart">
         <div class="card-header ">
-          <div class="row">
             <div class="col-sm-6 text-left">
               
-              <h2 class="card-title">Case to be Analysed</h2>
+              <h1 >Enter your query</h1>
+              <form action="" method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6"> {{ form.uploadfile_name }} </div>
+                  <div class="col-md-6"> {{ form.uploadfile_short_desc }} </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-6"> {{ form.uploadfile }} </div>
+                </div>
+                <br>
+                <div class="row">
+                <div class="col-md-6"> <input class="btn btn-primary" type="submit" value="Submit"> </div>
+                </div>
+                
+              
+                  
+                <!-- <input type="submit" value="Submit"> -->
+            </form>
             </div>
-          
-          </div>
+            <br>
+
+
       
-          <form action="{% url 'adddb' %}" method="POST" role="form">
+          <!-- <form action="{% url 'adddb' %}" method="POST" role="form">
             {% csrf_token %}
             <div class="form-group">
-              
-                <span class="input-group-btn">
+               <span class="input-group-btn">
                   <button type="submit" class="btn btn-default" id="add-btn">Export Existing Cases</button>
                 </span>
-          
-           
+  
             </div>
-          </form>
-          <br>
-          <br>
-          <form action="" method='POST' enctype="multipart/form-data">
-              {% csrf_token %}
-              {{form.as_p}}
-              <input type="submit" value="Submit">
-          </form>
+          </form> -->
+          <!-- <br>
+          <br> -->
+
+
 
     
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+<div class="col-12">
+  <div class="card card-chart">
+    <div class="card-header">
+      <div class="col-sm-11">
+      <h2 >Recents</h2>
+      <table class="table align-middle mb-0" style="table-layout: auto;">
+        <thead class="bg-dark">
+          <tr>
+            <th>Query</th>
+            <th>Query Type</th>
+            <th>Query Description</th>
+            <th>Actions</th>
 
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in files %}
+          <tr>
+            
+            <td class="fitwidth">
+
+                  <p class="fw-bold mb-1">{{ f.uploadfile_name }}</p>
+            </td>
+            <td class="left">
+              <p class="fw-normal mb-1">{{ f.uploadfile_short_desc }}</p>
+
+          </td>
+            <td class="left">
+                <p class="fw-normal mb-1">{{ f.uploadfile_description }}</p>
+
+            </td>
+            
+            <td >
+              <form action="{% url 'all_analysis' id=f.id %}" method='POST' enctype="multipart/form-data">
+                {% csrf_token %}
+              <button type="submit" class="btn btn-default" id="add-btn">Perform AI Analysis</button>
+            </form>
+              </td>           
+
+            
+          </tr>
+          {% empty %}
+          <p>No files added.</p>
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+<!-- 
+  <div class="col-lg-12 col-md-12">
     <div class="col-12">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h2 class="card-title">Recents</h2>
-            <table class="table align-middle mb-0" style="table-layout: auto;">
-              <thead class="bg-dark">
-                <tr>
-                  <th>Case Name</th>
-                  <th>Case Description</th>
-                  <th>Case Status</th>
-                  <th>View Case</th>
-                  <th>AI Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for f in files %}
-                <tr>
-                  
-                  <td class="fitwidth">
+      <div class="card card-chart">
+        <div class="card-header ">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title">Similar Cases</h2> -->
 
-                        <p class="fw-bold mb-1">{{ f.uploadfile_name }}</p>
-                  </td>
-                  
-                  <td class="left">
-                      <p class="fw-normal mb-1">{{ f.uploadfile_description }}</p>
+              <!-- <table class="table align-middle mb-0" style="table-layout: auto;">
+                <thead class="bg-dark">
+                  <tr>
+                    <th>Case Name</th>
+                    <th>View</th>
+                  </tr>
+                </thead> -->
+                <!-- <tbody>
+                  {% for sim_case in similarcases %}
+                  <tr>
+                      <td class="fitwidth">
+                        <p class="fw-bold mb-1">{{ sim_case }}</p>
+                    </td>
 
-                  </td>
-                  
-                  <td>
-                    <span class="badge  badge-primary rounded-pill d-inline">{{f.prediction}} %</span>
-                  </td>
-                  <td >
-                    <button type="submit" class="btn btn-default" id="add-btn">View Case</button>
-                    </td>           
-                  <td >
-                  <button type="submit" class="btn btn-default" id="add-btn">Get Similar Cases</button>
-                  </td>
-                </tr>
-                {% empty %}
-                <p>No files added.</p>
-                {% endfor %}
-    
-              </tbody>
-            </table>
+                    <td >
+                      <button type="submit" class="btn btn-default" id="add-btn">View Case</button>
+                      </td>  
+                  </tr>
+              {% endfor %}
 
+              </tbody> -->
 
+            </div>
+          
           </div>
+    
         </div>
       </div>
-
+    </div>
+  </div>
 </body>
+
+
 
 {% endblock content %}
